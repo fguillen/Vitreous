@@ -1,5 +1,8 @@
+require "bundler"
+Bundler.setup
+
 require 'sinatra/base'
-require 'mustache/sinatra'
+# require 'mustache/sinatra'
 require 'dropbox'
 
 $LOAD_PATH.unshift( File.dirname(__FILE__) )
