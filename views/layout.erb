@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      <%= @title %>
+    </title>
+    <style>
+      body { background: #eee; }
+      li { list-style: none !important; }
+    </style>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="menu">
+      <ul>
+        <% @collections.each_pair do |title, items| %>
+          <li>
+            <%= title %>
+            <ul>
+              <% items.each_value do |item| %>
+                <li><a href="/<%= title %>/<%= item[:title] %>"><%= item[:title] %></a></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <div id="main">
+      <%= yield %>
+    </div>
+  </body>
+</html>
