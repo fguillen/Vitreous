@@ -24,17 +24,19 @@ module Vitrious
       dir = @session.entry( '/Public/Vitrious' )
       dir.list.each do |element|
         if( element.directory? )
-          collection = self.create_collection( element.path )
-          collections[collection[:title]] = collection[:items]
+          title, items = self.create_collection( element.path )
+          collections[title] = items
         end
       end
       
+      puts "XXX: collections: #{collections.inspect}"
       return collections
     end
     
     # Returns the title of the Collection and a hash of ItemHashs
     #
     def create_collection( path )
+      puts "XXX: create_collection(#{path})"
       title = File.basename( path )
       items = {}
       
