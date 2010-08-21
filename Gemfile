@@ -1,3 +1,7 @@
-source "http://rubygems.org"
-gem "sinatra"
-gem "dropbox"
+source 'http://rubygems.org'
+gem 'sinatra', :require => 'sinatra/base'
+gem 'dropbox'
+
+group :test do
+  gem 'mocha'
+end

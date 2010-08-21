@@ -29,4 +29,28 @@ class DropboxTest < Test::Unit::TestCase
       end
     end
   end
+  
+  def test_serialized
+    Vitrious::Dropbox.stubs(:session_path).returns( "#{File.dirname(__FILE__)}/../fixtures/session.serialized" )
+    assert( Vitrious::Dropbox.serialized? )
+  end
+  
+  def test_serialize
+    Vitrious::Dropbox.stubs(:session_path).returns( "#{File.dirname(__FILE__)}/../fixtures/session.serialized.test" )
+    session = mock()
+    session.expects(:serialize).returns('session serialized')
+    
+    Vitrious::Dropbox.serialize( session )
+    
+    assert_equal( 'session serialized', File.read( Vitrious::Dropbox.session_path ) )
+    
+    File.delete( Vitrious::Dropbox.session_path )
+  end
+  
+  # Don't know what happend with this test.
+  def test_deserialize
+    # Vitrious::Dropbox.expects(:deserialize)
+    Dropbox::Session.expects(:deserialize).with( Vitrious::Dropbox.session_path )
+    Vitrious::Dropbox.deserialize
+  end
 end

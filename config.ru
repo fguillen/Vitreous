@@ -1,5 +1,3 @@
 require 'vitrious_app'
-
-use Rack::ShowExceptions
-
+# use Rack::ShowExceptions
 run VitriousApp.new

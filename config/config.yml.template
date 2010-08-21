@@ -1,0 +1,4 @@
+:website_name: %website_name%
+:pass: %pass%
+:dropbox_consumer_key: %dropbox_consumer_key%
+:dropbox_consumer_secret: %dropbox_consumer_secret%
