@@ -1,0 +1,3 @@
+<% @collection.values.each do |item| %>
+  <%= erb( :item, :layout => false, :locals => { :item => item } ) %>
+<% end %>

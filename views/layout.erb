@@ -14,6 +14,7 @@
     <div id="menu">
       <ul>
         <% @collections.each_pair do |title, items| %>
+          <% if title != '_root' %>
           <li>
             <%= title %>
             <ul>
@@ -22,6 +23,7 @@
               <% end %>
             </ul>
           </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

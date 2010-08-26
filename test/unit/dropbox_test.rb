@@ -1,24 +1,18 @@
 require File.expand_path( "#{File.dirname(__FILE__)}/../test_helper" )
 
 class DropboxTest < Test::Unit::TestCase
+  def setup
+    DummyDropbox.root_path = File.expand_path( "#{File.dirname(__FILE__)}/../fixtures/dropbox" )
+  end
+  
   def test_index
-    # session = Dropbox::Session.deserialize( File.read( File.expand_path( "#{File.dirname(__FILE__)}/../fixtures/session.serialized" ) ) )
-    #     session.mode = :dropbox
-    #     puts session.authorized?
-    #     
-    #     puts "account: #{session.account}"
-    #     
-    
     session = Dropbox::Session.new('key', 'secret')
-    
     dropbox_utility = Vitrious::Dropbox.new( session )
-    dropbox_utility.index.each_pair do |title, items|
-      puts title
-      puts "---"
-      items.each do |item|
-        puts item.inspect
-      end
-    end
+    
+    # index_yaml = dropbox_utility.index.to_yaml
+    # File.open( "#{File.dirname(__FILE__)}/../fixtures/index.yml", 'w' ) { |f| f.write index_yaml }
+    
+    assert_equal( File.read( "#{File.dirname(__FILE__)}/../fixtures/index.yml" ), dropbox_utility.index.to_yaml)
   end
   
   def test_serialized

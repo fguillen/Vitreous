@@ -1,3 +1,1 @@
-<h1><%= @item[:title] %></h1>
-<p><%= @item[:description] %></p>
-<img src="<%= @item[:url] %>" />
+<%= erb( :item, :layout => false, :locals => { :item => @item } ) %>

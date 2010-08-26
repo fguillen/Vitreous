@@ -5,20 +5,25 @@ Bundler.require
 require "#{File.dirname(__FILE__)}/lib/vitrious/dropbox.rb"
 require "#{File.dirname(__FILE__)}/lib/vitrious/configurator.rb"
 
+require 'dummy_dropbox'
+
 class VitriousApp < Sinatra::Base
-  APP_CONFIG = YAML.load_file(File.dirname(__FILE__) + "/config/config.yml")
+  APP_CONFIG = YAML.load_file(File.dirname(__FILE__) + "/config/config.yml")[environment]
+  
+  set :views => "#{File.dirname(__FILE__)}/views"
   
   before do
+    DummyDropbox.root_path = File.expand_path( "#{File.dirname(__FILE__)}/test/fixtures/dropbox" )
   end
 
   get '/' do
     @collections = Vitrious::Dropbox.new( dropbox_session ).index
+    @collection = @collections['_root']
     @title = APP_CONFIG[:website_name]
-    erb :index
+    erb :collection
   end
   
   get '/authorize/:pass' do
-    puts "XXX: params.inspect: #{params.inspect}"
     return not_found  unless params['pass'] == APP_CONFIG[:pass]
 
     dropbox_session = Dropbox::Session.new( APP_CONFIG[:dropbox_consumer_key], APP_CONFIG[:dropbox_consumer_secret] )
@@ -34,14 +39,23 @@ class VitriousApp < Sinatra::Base
     Vitrious::Dropbox.serialize( dropbox_session )
     redirect '/'
   end
-
+  
   get '/:collection_title/:item_title' do
     @collections = Vitrious::Dropbox.new( dropbox_session ).index
     @item = @collections[params[:collection_title]][params[:item_title]]
-    @title = "#{APP_CONFIG[:website_name]} | @item[:title]"
+    @title = "#{APP_CONFIG[:website_name]} | #{@item[:title]}"
     return not_found unless @item
     
     erb :show
+  end
+  
+  get '/:collection_title' do
+    @collections = Vitrious::Dropbox.new( dropbox_session ).index
+    @collection = @collections[params[:collection_title]]
+    @title = "#{APP_CONFIG[:website_name]} | #{params[:collection_title]}"
+    return not_found unless @collection
+    
+    erb :collection
   end
   
   not_found do

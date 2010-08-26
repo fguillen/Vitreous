@@ -29,14 +29,16 @@ module Vitrious
         end
       end
       
-      puts "XXX: collections: #{collections.inspect}"
+      # root collection
+      title, items = self.create_collection( '/Public/Vitrious' )
+      collections['_root'] = items
+      
       return collections
     end
     
     # Returns the title of the Collection and a hash of ItemHashs
     #
     def create_collection( path )
-      puts "XXX: create_collection(#{path})"
       title = File.basename( path )
       items = {}
       
