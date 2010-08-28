@@ -1,0 +1,14 @@
+--- 
+:title: collection ordered
+:slug: 01-collection-ordered
+:items: 
+  02-another-file-ordered: 
+    :title: another file ordered
+    :slug: 02-another-file-ordered
+    :description: file2 content
+    :url: http://dl.dropbox.com/u/174/Vitrious/01_collection ordered/02_another file ordered.jpg
+  01-file-ordered: 
+    :title: file ordered
+    :slug: 01-file-ordered
+    :description: Index description
+    :url: http://dl.dropbox.com/u/174/Vitrious/01_collection ordered/01_file ordered.jpg

@@ -11,6 +11,12 @@ class VitriousAppTest < Test::Unit::TestCase
   
   def setup
     DummyDropbox.root_path = File.expand_path( "#{File.dirname(__FILE__)}/fixtures/dropbox" )
+    Vitrious::Dropbox.stubs(:session_path).returns( "#{File.dirname(__FILE__)}/fixtures/session.serialized" )
+    Vitrious::Dropbox.stubs(:index_cache_path).returns( "#{File.dirname(__FILE__)}/fixtures/index.yml.tmp" )
+  end
+  
+  def teardown
+    File.delete( "#{File.dirname(__FILE__)}/fixtures/index.yml.tmp" )  if File.exists?( "#{File.dirname(__FILE__)}/fixtures/index.yml.tmp" )
   end
 
   def test_index
@@ -55,5 +61,25 @@ class VitriousAppTest < Test::Unit::TestCase
     
     assert( last_response.body.include?('/Vitrious/collection1/file1.jpg') )
     assert( last_response.body.include?('/Vitrious/collection1/file2.jpg') )
+  end
+  
+  def test_refresh
+    File.expects(:delete).with( Vitrious::Dropbox.index_cache_path )
+    get '/refresh/pass'
+        
+    assert( last_response.redirect? )
+    assert( '/', last_response.location )
+  end
+  
+  def test_404_on_item
+    get '/not-exists/not-exists'
+    assert_equal( 'Página no encotrada | Page not found', last_response.body )
+    assert( last_response.not_found? )
+  end
+  
+  def test_404_on_collection
+    get '/not-exists'
+    assert_equal( 'Página no encotrada | Page not found', last_response.body )
+    assert( last_response.not_found? )
   end
 end

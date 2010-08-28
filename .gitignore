@@ -1,4 +1,4 @@
 #test/fixtures/session.serialized
 .bundle/
 .DS_Store
-
+config/index.yml

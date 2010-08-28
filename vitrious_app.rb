@@ -5,19 +5,19 @@ Bundler.require
 require "#{File.dirname(__FILE__)}/lib/vitrious/dropbox.rb"
 require "#{File.dirname(__FILE__)}/lib/vitrious/configurator.rb"
 
-require 'dummy_dropbox'
-
 class VitriousApp < Sinatra::Base
   APP_CONFIG = YAML.load_file(File.dirname(__FILE__) + "/config/config.yml")[environment]
   
-  set :views => "#{File.dirname(__FILE__)}/views"
+  set :views, "#{File.dirname(__FILE__)}/views"
+  set :public, "#{File.dirname(__FILE__)}/public"
+  set :root, File.dirname(__FILE__)
+  set :static, true
   
   before do
-    DummyDropbox.root_path = File.expand_path( "#{File.dirname(__FILE__)}/test/fixtures/dropbox" )
   end
 
   get '/' do
-    @collections = Vitrious::Dropbox.new( dropbox_session ).index
+    @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
     @collection = @collections['_root']
     @title = APP_CONFIG[:website_name]
     erb :collection
@@ -40,20 +40,32 @@ class VitriousApp < Sinatra::Base
     redirect '/'
   end
   
-  get '/:collection_title/:item_title' do
-    @collections = Vitrious::Dropbox.new( dropbox_session ).index
-    @item = @collections[params[:collection_title]][params[:item_title]]
-    @title = "#{APP_CONFIG[:website_name]} | #{@item[:title]}"
+  get '/refresh/:pass' do
+    return not_found  unless params['pass'] == APP_CONFIG[:pass]
+    
+    File.delete( Vitrious::Dropbox.index_cache_path )
+    redirect '/'
+  end
+  
+  get '/:collection_slug/:item_slug' do
+    @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+    @collection = @collections[params[:collection_slug]]
+    return not_found unless @collection
+    
+    @item = @collection[:items][params[:item_slug]]
     return not_found unless @item
     
+    @title = "#{APP_CONFIG[:website_name]} | #{@item[:title]}"
+
     erb :show
   end
   
-  get '/:collection_title' do
-    @collections = Vitrious::Dropbox.new( dropbox_session ).index
-    @collection = @collections[params[:collection_title]]
-    @title = "#{APP_CONFIG[:website_name]} | #{params[:collection_title]}"
+  get '/:collection_slug' do
+    @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+    @collection = @collections[params[:collection_slug]]
     return not_found unless @collection
+    
+    @title = "#{APP_CONFIG[:website_name]} | #{params[:collection_slug]}"
     
     erb :collection
   end

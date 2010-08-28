@@ -1,20 +1,47 @@
 --- 
 collection2: 
-  file3: 
-    :title: file3
-    :description: file2 content
-    :url: http://dl.dropbox.com/u/174/Vitrious/collection2/file3.jpg
+  :title: collection2
+  :slug: collection2
+  :items: 
+    file3: 
+      :title: file3
+      :slug: file3
+      :description: file2 content
+      :url: http://dl.dropbox.com/u/174/Vitrious/collection2/file3.jpg
 _root: 
-  index: 
-    :title: index
-    :description: Index description
-    :url: http://dl.dropbox.com/u/174/Vitrious/index.jpg
+  :title: Vitrious
+  :slug: vitrious
+  :items: 
+    index: 
+      :title: index
+      :slug: index
+      :description: Index description
+      :url: http://dl.dropbox.com/u/174/Vitrious/index.jpg
+01-collection-ordered: 
+  :title: collection ordered
+  :slug: 01-collection-ordered
+  :items: 
+    02-another-file-ordered: 
+      :title: another file ordered
+      :slug: 02-another-file-ordered
+      :description: file2 content
+      :url: http://dl.dropbox.com/u/174/Vitrious/01_collection ordered/02_another file ordered.jpg
+    01-file-ordered: 
+      :title: file ordered
+      :slug: 01-file-ordered
+      :description: Index description
+      :url: http://dl.dropbox.com/u/174/Vitrious/01_collection ordered/01_file ordered.jpg
 collection1: 
-  file1: 
-    :title: file1
-    :description: file2 content
-    :url: http://dl.dropbox.com/u/174/Vitrious/collection1/file1.jpg
-  file2: 
-    :title: file2
-    :description: file2 content
-    :url: http://dl.dropbox.com/u/174/Vitrious/collection1/file2.jpg
+  :title: collection1
+  :slug: collection1
+  :items: 
+    file1: 
+      :title: file1
+      :slug: file1
+      :description: file2 content
+      :url: http://dl.dropbox.com/u/174/Vitrious/collection1/file1.jpg
+    file2: 
+      :title: file2
+      :slug: file2
+      :description: file2 content
+      :url: http://dl.dropbox.com/u/174/Vitrious/collection1/file2.jpg

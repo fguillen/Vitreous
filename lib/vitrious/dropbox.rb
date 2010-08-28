@@ -18,20 +18,24 @@ module Vitrious
     #       }
     #     }
     #
-    def index
+    def index( cache = false )
+      return YAML.load_file( Vitrious::Dropbox.index_cache_path )  if File.exists?( Vitrious::Dropbox.index_cache_path ) && cache
+      
       collections = {}
       
       dir = @session.entry( '/Public/Vitrious' )
       dir.list.each do |element|
         if( element.directory? )
-          title, items = self.create_collection( element.path )
-          collections[title] = items
+          collection = self.create_collection( element.path )
+          collections[ collection[:slug] ] = collection
         end
       end
       
       # root collection
-      title, items = self.create_collection( '/Public/Vitrious' )
-      collections['_root'] = items
+      collections['_root'] = self.create_collection( '/Public/Vitrious' )
+      
+      # cache it
+      File.open( Vitrious::Dropbox.index_cache_path, 'w' ) { |f| f.write collections.to_yaml }
       
       return collections
     end
@@ -39,18 +43,23 @@ module Vitrious
     # Returns the title of the Collection and a hash of ItemHashs
     #
     def create_collection( path )
-      title = File.basename( path )
       items = {}
       
       dir = @session.entry( path )
       dir.list.each do |element|
         if( File.extname( element.path ) =~ /^\.(jpg|png)$/ )
           item = self.create_item( element.path )
-          items[item[:title]] = item
+          items[item[:slug]] = item
         end
       end
+
+      collection = {
+        :slug => Vitrious::Dropbox.path_to_slug( path ),
+        :title => Vitrious::Dropbox.path_to_title( path ),
+        :items => items
+      }
       
-      return title, items
+      return collection
     end
     
     # Returns an ItemHash
@@ -59,13 +68,14 @@ module Vitrious
       description_path = path.gsub( /#{File.extname(path)}$/, '.txt' )
       description = nil
       begin
-        description = @session.download( description_path )
+        description = @session.download( description_path ) 
       rescue
-        puts "XXX: #{description_path} doesn't exists"
+        puts "Not exists description: #{description_path}"
       end
       
       item = {
-        :title => File.basename( path, File.extname( path ) ),
+        :slug => Vitrious::Dropbox.path_to_slug( path ),
+        :title => Vitrious::Dropbox.path_to_title( path ),
         :url => "http://dl.dropbox.com/u/#{@uid}/#{path.gsub( /^\/Public\//, '' )}",
         :description => description
       }
@@ -91,6 +101,18 @@ module Vitrious
     
     def self.session_path
       return "#{File.dirname(__FILE__)}/../../config/session.serialized"
+    end
+    
+    def self.index_cache_path
+      return "#{File.dirname(__FILE__)}/../../config/index.yml"
+    end
+    
+    def self.path_to_slug( path )
+      return File.basename( path, File.extname( path ) ).downcase.gsub(/[^a-z0-9 -_]/,"").gsub('_', '-').gsub(/[ ]+/,"-")
+    end
+    
+    def self.path_to_title( path )
+      return File.basename( path, File.extname( path ) ).gsub( /^\d*(_|\s)/, '' )
     end
   end
 end
