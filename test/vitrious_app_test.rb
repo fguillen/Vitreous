@@ -1,4 +1,4 @@
-require File.expand_path( "#{File.dirname(__FILE__)}/../test_helper" )
+require File.expand_path( "#{File.dirname(__FILE__)}/test_helper" )
 # ENV['RACK_ENV'] = 'test'
 # set :environment, :test
 
@@ -10,7 +10,7 @@ class VitriousAppTest < Test::Unit::TestCase
   end
   
   def setup
-    DummyDropbox.root_path = File.expand_path( "#{File.dirname(__FILE__)}/../fixtures/dropbox" )
+    DummyDropbox.root_path = File.expand_path( "#{File.dirname(__FILE__)}/fixtures/dropbox" )
   end
 
   def test_index

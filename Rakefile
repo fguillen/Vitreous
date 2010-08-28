@@ -1,5 +1,8 @@
-require "#{File.dirname(__FILE__)}/vitrious_app.rb"
 
+# Run tests
+task :default do
+  Dir["test/*test.rb"].sort.each { |test|  load test }
+end
 
 # Initialize de config.yml
 #
@@ -8,6 +11,7 @@ require "#{File.dirname(__FILE__)}/vitrious_app.rb"
 #
 # Use: rake config dropbox_consumer_key='CONSUMER KEY' dropbox_consumer_secret='CONSUMER SECRET'
 task :config do
+  require "#{File.dirname(__FILE__)}/lib/vitrious/configurator"
   Vitrious::Configurator.do( ENV )
 end
 

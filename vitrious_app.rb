@@ -66,10 +66,7 @@ class VitriousApp < Sinatra::Base
   private
   
     def dropbox_session
-      puts "XXX: dropbox_session"
       @dropbox_session ||= Vitrious::Dropbox.deserialize
-      
-      puts "XXX: @dropbox_session.authorized?: #{@dropbox_session.authorized?}"
       return @dropbox_session
     end
 end

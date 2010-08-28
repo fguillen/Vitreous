@@ -1,14 +1,14 @@
 :test: 
   :website_name: my portfolio test
   :pass: pass
-  :dropbox_consumer_key: 14lc8xjqtfhfdrp
-  :dropbox_consumer_secret: tcjcpjdmtpo089k
+  :dropbox_consumer_key: xxx
+  :dropbox_consumer_secret: xxx
 
 :development: 
   :website_name: my portfolio developemnt
   :pass: pass
-  :dropbox_consumer_key: 14lc8xjqtfhfdrp
-  :dropbox_consumer_secret: tcjcpjdmtpo089k
+  :dropbox_consumer_key: xxx
+  :dropbox_consumer_secret: xxx
   
 :production: 
   :website_name: %website_name%

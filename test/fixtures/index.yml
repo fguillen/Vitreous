@@ -1,20 +1,20 @@
 --- 
 collection2: 
   file3: 
-    :description: file2 content
     :title: file3
+    :description: file2 content
     :url: http://dl.dropbox.com/u/174/Vitrious/collection2/file3.jpg
 _root: 
   index: 
-    :description: Index description
     :title: index
+    :description: Index description
     :url: http://dl.dropbox.com/u/174/Vitrious/index.jpg
 collection1: 
   file1: 
-    :description: file2 content
     :title: file1
+    :description: file2 content
     :url: http://dl.dropbox.com/u/174/Vitrious/collection1/file1.jpg
   file2: 
-    :description: file2 content
     :title: file2
+    :description: file2 content
     :url: http://dl.dropbox.com/u/174/Vitrious/collection1/file2.jpg
