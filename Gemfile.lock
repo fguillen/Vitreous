@@ -1,0 +1,30 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    dropbox (1.1.0)
+      json (>= 1.2.0)
+      multipart-post (>= 1.0)
+      oauth (>= 0.3.6)
+    dummy_dropbox (0.0.1)
+      dropbox
+    json (1.4.6)
+    mocha (0.9.8)
+      rake
+    multipart-post (1.0.1)
+    oauth (0.4.2)
+    rack (1.2.1)
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rake (0.8.7)
+    sinatra (1.0)
+      rack (>= 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dropbox
+  dummy_dropbox
+  mocha
+  rack-test
+  sinatra
