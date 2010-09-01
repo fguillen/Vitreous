@@ -7,7 +7,9 @@ module Vitrious
       end
 
       File.open( "#{Vitrious::Configurator.config_root_path}/config.yml", 'w' ) { |f| f.write config }
-
+      
+      puts "config.yml"
+      puts "----------"
       puts File.read( "#{Vitrious::Configurator.config_root_path}/config.yml" )
     end
     
