@@ -17,7 +17,7 @@ class VitriousApp < Sinatra::Base
   end
 
   get '/' do
-    @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+    charge_collections
     @collection = @collections['_root']
     @title = APP_CONFIG[:website_name]
     erb :collection
@@ -48,7 +48,7 @@ class VitriousApp < Sinatra::Base
   end
   
   get '/:collection_slug/:item_slug' do
-    @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+    charge_collections
     @collection = @collections[params[:collection_slug]]
     return not_found unless @collection
     
@@ -61,11 +61,11 @@ class VitriousApp < Sinatra::Base
   end
   
   get '/:collection_slug' do
-    @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+    charge_collections
     @collection = @collections[params[:collection_slug]]
     return not_found unless @collection
     
-    @title = "#{APP_CONFIG[:website_name]} | #{params[:collection_slug]}"
+    @title = "#{APP_CONFIG[:website_name]} | #{@collection[:title]}"
     
     erb :collection
   end
@@ -77,6 +77,10 @@ class VitriousApp < Sinatra::Base
   
   private
   
+    def charge_collections
+      @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+    end
+    
     def dropbox_session
       @dropbox_session ||= Vitrious::Dropbox.deserialize
       return @dropbox_session
