@@ -14,6 +14,9 @@ class VitriousApp < Sinatra::Base
   set :public, "#{File.dirname(__FILE__)}/public"
   set :root, File.dirname(__FILE__)
   set :static, true
+  set :raise_errors, false 
+  set :show_exceptions, false
+  # set :show_exceptions, true  if development? 
   
   configure :production do
     Vitrious::Dropbox.cache = true
@@ -77,11 +80,15 @@ class VitriousApp < Sinatra::Base
   end
   
   not_found do
-    "Página no encotrada | Page not found"
+    "Pagina no encontrada | Page not found"
   end
   
   error Vitrious::NotAuthorizedException do
-    "Sesión no autorizada | Not authorized session"
+    "Sesion no autorizada | Not authorized session"
+  end
+  
+  error OAuth::Unauthorized do
+    "Error en conexion con Dropbox comprueba tus credenciales | Error connecting to Dropbox, check your credentials"
   end
   
   private

@@ -13,10 +13,10 @@
   :dropbox_consumer_secret: xxx
   
 :production: 
-  :website_name: %website_name%
-  :pass: %pass%
-  :dropbox_consumer_key: %dropbox_consumer_key%
-  :dropbox_consumer_secret: %dropbox_consumer_secret%
+  :website_name: My Portfolio
+  :pass: mypass
+  :dropbox_consumer_key: tcjcpjdmtpo089k
+  :dropbox_consumer_secret: 14lc8xjqtfhfdrp
 
 
 
