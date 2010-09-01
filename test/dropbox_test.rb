@@ -32,6 +32,7 @@ class DropboxTest < Test::Unit::TestCase
   end
   
   def test_index_should_cache_result
+    Vitrious::Dropbox.stubs(:cache).returns(true)
     Vitrious::Dropbox.new( @session ).index
     
     assert( File.exists?( "#{File.dirname(__FILE__)}/fixtures/index.yml.tmp" ) )
@@ -60,8 +61,9 @@ class DropboxTest < Test::Unit::TestCase
   end
   
   def test_index_with_cache
+    Vitrious::Dropbox.stubs(:cache).returns(true)
     dropbox_utility = Vitrious::Dropbox.new( @session )
-    assert_equal( YAML.load_file("#{File.dirname(__FILE__)}/fixtures/index.yml"), dropbox_utility.index(true) )
+    assert_equal( YAML.load_file("#{File.dirname(__FILE__)}/fixtures/index.yml"), dropbox_utility.index )
   end
   
   def test_path_to_slug
@@ -74,5 +76,13 @@ class DropboxTest < Test::Unit::TestCase
     assert_equal( "Wadus slúg", Vitrious::Dropbox.path_to_title( '/x/x/01_Wadus slúg.txt') )
     assert_equal( "Wadus slúg", Vitrious::Dropbox.path_to_title( '/x/x/01 Wadus slúg.txt') )
     assert_equal( "Wadus slúg", Vitrious::Dropbox.path_to_title( '/x/x/01 Wadus slúg/') )
+  end
+  
+  def test_deserialize_raise_exception_if_not_session_serialized
+    Vitrious::Dropbox.expects(:session_path).returns( '/wadus/wadus' )
+    
+    assert_raise( Vitrious::NotAuthorizedException ) do
+      Vitrious::Dropbox.deserialize
+    end
   end
 end

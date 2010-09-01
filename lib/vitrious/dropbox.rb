@@ -1,26 +1,24 @@
 module Vitrious
   class Dropbox
     
+    @@cache = false
+    def self.cache=(val)
+      @@cache = val
+    end
+    
+    def self.cache
+      return @@cache
+    end
+    
     def initialize( session )
       @session = session
       @uid = @session.account.uid
     end
     
     
-    # Returns a hash like this:
-    #     {
-    #       'title collection 1' => {
-    #         'title item 1' => item_hash,
-    #         'title item 2' => item_hash
-    #       },
-    #       'title collection 2' => {    
-    #         'title item 1' => item_hash
-    #       }
-    #     }
-    #
-    def index( cache = false )
-      return YAML.load_file( Vitrious::Dropbox.index_cache_path )  if File.exists?( Vitrious::Dropbox.index_cache_path ) && cache
-      
+    def index
+      return YAML.load_file( Vitrious::Dropbox.index_cache_path )  if File.exists?( Vitrious::Dropbox.index_cache_path ) && Vitrious::Dropbox.cache
+            
       collections = {}
       
       dir = @session.entry( '/Public/Vitrious' )
@@ -35,7 +33,7 @@ module Vitrious
       collections['_root'] = self.create_collection( '/Public/Vitrious' )
       
       # cache it
-      File.open( Vitrious::Dropbox.index_cache_path, 'w' ) { |f| f.write collections.to_yaml }
+      File.open( Vitrious::Dropbox.index_cache_path, 'w' ) { |f| f.write collections.to_yaml }  if Vitrious::Dropbox.cache
       
       return collections
     end
@@ -90,6 +88,8 @@ module Vitrious
     end
     
     def self.deserialize
+      raise Vitrious::NotAuthorizedException  unless File.exists?( Vitrious::Dropbox.session_path )
+      
       session = ::Dropbox::Session.deserialize( File.read( Vitrious::Dropbox.session_path ) )
       session.mode = :dropbox
       return session

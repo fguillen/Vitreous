@@ -82,4 +82,12 @@ class VitriousAppTest < Test::Unit::TestCase
     assert_equal( 'Página no encotrada | Page not found', last_response.body )
     assert( last_response.not_found? )
   end
+  
+  def test_not_authorized_exception
+    Dropbox::Session.any_instance.stubs(:authorized?).returns(false)
+    
+    get '/'
+    
+    assert_match( "Not authorized session", last_response.body )
+  end
 end

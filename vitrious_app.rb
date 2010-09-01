@@ -4,6 +4,7 @@ Bundler.require
 
 require "#{File.dirname(__FILE__)}/lib/vitrious/dropbox.rb"
 require "#{File.dirname(__FILE__)}/lib/vitrious/configurator.rb"
+require "#{File.dirname(__FILE__)}/lib/vitrious/not_authorized_exception.rb"
 
 class VitriousApp < Sinatra::Base
   config_file_path = File.exists?("#{File.dirname(__FILE__)}/config/config.yml") ? "#{File.dirname(__FILE__)}/config/config.yml" : "#{File.dirname(__FILE__)}/config/config.yml.template"
@@ -13,6 +14,10 @@ class VitriousApp < Sinatra::Base
   set :public, "#{File.dirname(__FILE__)}/public"
   set :root, File.dirname(__FILE__)
   set :static, true
+  
+  configure :production do
+    Vitrious::Dropbox.cache = true
+  end
   
   before do
   end
@@ -74,16 +79,22 @@ class VitriousApp < Sinatra::Base
   not_found do
     "Página no encotrada | Page not found"
   end
-
+  
+  error Vitrious::NotAuthorizedException do
+    "Sesión no autorizada | Not authorized session"
+  end
   
   private
   
     def charge_collections
-      @collections = Vitrious::Dropbox.new( dropbox_session ).index( true )
+      @collections = Vitrious::Dropbox.new( dropbox_session ).index
     end
     
     def dropbox_session
       @dropbox_session ||= Vitrious::Dropbox.deserialize
+      
+      raise Vitrious::NotAuthorizedException  unless @dropbox_session.authorized?
+
       return @dropbox_session
     end
 end
