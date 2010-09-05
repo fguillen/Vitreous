@@ -14,14 +14,13 @@ class VitriousApp < Sinatra::Base
   set :public, "#{File.dirname(__FILE__)}/public"
   set :root, File.dirname(__FILE__)
   set :static, true
-  set :raise_errors, false 
-  set :show_exceptions, false
-  # set :show_exceptions, true  if development? 
   
   configure :production do
     Vitrious::Dropbox.cache = true
+    set :raise_errors, false 
+    set :show_exceptions, false
     
-    log = File.new("#{File.dirname(__FILE__)}/sinatra.log", "a")
+    log = File.new("#{File.dirname(__FILE__)}/log/sinatra.log", "a")
     STDOUT.reopen(log)
     STDERR.reopen(log)
   end
@@ -38,7 +37,7 @@ class VitriousApp < Sinatra::Base
   
   get '/authorize/:pass' do
     return not_found  unless params['pass'] == APP_CONFIG[:pass]
-
+    
     dropbox_session = Dropbox::Session.new( APP_CONFIG[:dropbox_consumer_key], APP_CONFIG[:dropbox_consumer_secret] )
     Vitrious::Dropbox.serialize( dropbox_session )
     redirect dropbox_session.authorize_url(:oauth_callback => "http://#{request.env['HTTP_HOST']}/authorize_confirm/#{APP_CONFIG[:pass]}")
