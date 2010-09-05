@@ -20,6 +20,10 @@ class VitriousApp < Sinatra::Base
   
   configure :production do
     Vitrious::Dropbox.cache = true
+    
+    log = File.new("#{File.dirname(__FILE__)}/sinatra.log", "a")
+    STDOUT.reopen(log)
+    STDERR.reopen(log)
   end
   
   before do
