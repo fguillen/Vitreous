@@ -13,12 +13,12 @@
       <div id="menu">
         <ul>
           <li><a href="/">Home</a></li>
-          <% @collections.each_key.sort.map{ |e| @collections[e] }.each do |collection| %>
+          <% short( @collections ).each do |collection| %>
             <% if collection[:slug] != '_root' %>
             <li>
               <%= collection[:title] %>
               <ul>
-                <% collection[:items].each_key.sort.map{ |e| collection[:items][e] }.each do |item| %>
+                <% short( collection[:items] ).each do |item| %>
                   <li><a href="/<%= collection[:slug] %>/<%= item[:slug] %>"><%= item[:title] %></a></li>
                 <% end %>
               </ul>

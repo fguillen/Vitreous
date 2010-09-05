@@ -90,4 +90,11 @@ class VitriousAppTest < Test::Unit::TestCase
     
     assert_match( "Not authorized session", last_response.body )
   end
+  
+  def test_collections_show_be_shorted
+    get '/'
+    
+    assert_match( /collection ordered.*01-file-ordered.*02-another-file-ordered.*collection1.*file1.*file2.*collection2.*file3/m, last_response.body )
+  end
+    
 end

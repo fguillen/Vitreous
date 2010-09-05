@@ -27,7 +27,7 @@ class DropboxTest < Test::Unit::TestCase
     
     # index_yaml = dropbox_utility.index.to_yaml
     # File.open( "#{File.dirname(__FILE__)}/fixtures/index.yml", 'w' ) { |f| f.write index_yaml }
-    
+    #     
     assert_equal( YAML.load_file("#{File.dirname(__FILE__)}/fixtures/index.yml"), dropbox_utility.index)
   end
   
@@ -85,4 +85,5 @@ class DropboxTest < Test::Unit::TestCase
       Vitrious::Dropbox.deserialize
     end
   end
+  
 end

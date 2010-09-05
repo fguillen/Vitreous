@@ -18,7 +18,7 @@ module Vitrious
     
     def index
       return YAML.load_file( Vitrious::Dropbox.index_cache_path )  if File.exists?( Vitrious::Dropbox.index_cache_path ) && Vitrious::Dropbox.cache
-            
+      
       collections = {}
       
       dir = @session.entry( '/Public/Vitrious' )
@@ -31,6 +31,7 @@ module Vitrious
       
       # root collection
       collections['_root'] = self.create_collection( '/Public/Vitrious' )
+      collections['_root'][:slug] = '_root'
       
       # cache it
       File.open( Vitrious::Dropbox.index_cache_path, 'w' ) { |f| f.write collections.to_yaml }  if Vitrious::Dropbox.cache

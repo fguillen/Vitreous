@@ -5,8 +5,11 @@ Bundler.require
 require "#{File.dirname(__FILE__)}/lib/vitrious/dropbox.rb"
 require "#{File.dirname(__FILE__)}/lib/vitrious/configurator.rb"
 require "#{File.dirname(__FILE__)}/lib/vitrious/not_authorized_exception.rb"
+require "#{File.dirname(__FILE__)}/lib/vitrious/helpers.rb"
 
 class VitriousApp < Sinatra::Base
+  helpers Vitrious::Helpers
+  
   config_file_path = File.exists?("#{File.dirname(__FILE__)}/config/config.yml") ? "#{File.dirname(__FILE__)}/config/config.yml" : "#{File.dirname(__FILE__)}/config/config.yml.template"
   APP_CONFIG = YAML.load_file(config_file_path)[environment]
   
