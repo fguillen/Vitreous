@@ -73,13 +73,13 @@ class VitriousAppTest < Test::Unit::TestCase
   
   def test_404_on_item
     get '/not-exists/not-exists'
-    assert_equal( 'Página no encotrada | Page not found', last_response.body )
+    assert_equal( 'Pagina no encontrada | Page not found', last_response.body )
     assert( last_response.not_found? )
   end
   
   def test_404_on_collection
     get '/not-exists'
-    assert_equal( 'Página no encotrada | Page not found', last_response.body )
+    assert_equal( 'Pagina no encontrada | Page not found', last_response.body )
     assert( last_response.not_found? )
   end
   
