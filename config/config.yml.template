@@ -1,4 +1,4 @@
-# use rake config website_name="My Portfolio" pass="mypass" dropbox_consumer_secret="XXX" dropbox_consumer_key="XXX"
+# use rake config dropbox_consumer_key='CONSUMER KEY' dropbox_consumer_secret='CONSUMER SECRET' website_name='My Portfolio' pass='mypass'
 
 :test: 
   :website_name: my portfolio test
