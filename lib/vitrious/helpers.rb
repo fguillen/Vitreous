@@ -4,8 +4,8 @@ module Vitrious
       return "XXX #{strin} XXX"
     end
     
-    def short( hash_to_short )
-      hash_to_short.each_key.sort.map{ |e| hash_to_short[e] }
+    def sort( hash_to_sort )
+      hash_to_sort.each_key.sort.map{ |e| hash_to_sort[e] }
     end
   end
 end
