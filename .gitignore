@@ -3,3 +3,4 @@
 .DS_Store
 config/index.yml
 log/*.log
+lib/extra/Vitrious/
