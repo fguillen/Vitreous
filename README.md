@@ -16,15 +16,15 @@ Dropbox.
 
 ### Local
 
-* Install (Dropbox)[https://www.dropbox.com/install].
-* Download the (Dropbox Vitrious Example Tree)[http://github.com/fguillen/Vitrious/blob/master/example/Dropbox_Tree_Example.zip]
+* Install [Dropbox](https://www.dropbox.com/install).
+* Download the [Dropbox Vitrious Example Tree](http://github.com/fguillen/Vitrious/blob/master/example/Dropbox_Tree_Example.zip)
 * Unzip it into your local /Dropbox folder
 * It should create the /Dropbox/Public/Vitrious folder with example data
 * Synch your Dropbox
 
 ### Dropbox
 
-* Create an App on the (Dropbox API Site)[https://www.dropbox.com/developers/apps]
+* Create an App on the [Dropbox API Site](https://www.dropbox.com/developers/apps)
 * Anote the 'App keys' for this app.
 
 ### Server
@@ -50,6 +50,3 @@ Dropbox.
 If you update something on your */Dropbox/Public/Vitrious* folder the changes will not affect immediately to your Vitrious web site. You have to refresh your Vitrious cache using the next link:
 
     http://your-vitrious-site.com/refresh/<yourpass>
-
-
-
