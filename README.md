@@ -25,7 +25,7 @@ Dropbox.
 ### Dropbox
 
 * Create an App on the [Dropbox API Site](https://www.dropbox.com/developers/apps)
-* Anote the 'App keys' for this app.
+* Anote the *'App keys'* for this app.
 
 ### Server
 
@@ -37,8 +37,7 @@ Dropbox.
 
 ### First Use
 
-* Connect Vitrious with your Dropbox Account:
-    http://your-vitrious-site.com/authorize/<yourpass>
+* Connect Vitrious with your Dropbox Account: `http://your-vitrious-site.com/authorize/<yourpass>`
 
 
 ## Updating your portfolio
