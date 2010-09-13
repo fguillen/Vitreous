@@ -9,9 +9,9 @@ body {
   background: #fff;
 }
 
-a:link { text-decoration: none; color: #000000; background-color: #21D6BD }
+a:link { text-decoration: none; color: #000000; background-color: #FF3; }
 a:active { text-decoration: none; background-color:#FFFF00 }
-a:visited { text-decoration: none; color: #000000; background-color: #21D6BD }
+a:visited { text-decoration: none; color: #000000; background-color: #FF3; }
 a:hover { text-decoration: underline; background-color: #666666 }
 
 a img { border: none; }
