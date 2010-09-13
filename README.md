@@ -42,6 +42,6 @@ Dropbox.
 
 ## Updating your portfolio
 
-If you update something on your */Dropbox/Public/Vitrious* folder the changes will not affect immediately to your Vitrious web site. You have to refresh your Vitrious cache using the next link:
+If you update something on your */Dropbox/Public/Vitrious* folder the changes will not affect immediately to your *Vitrious web site*. You have to refresh your **Vitrious cache** using the next url:
 
     http://your-vitrious-site.com/refresh/<yourpass>
