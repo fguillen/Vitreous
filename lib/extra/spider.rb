@@ -1,3 +1,5 @@
+require 'mechanize'
+
 module Extra
   class Spider
     def self.create_tree_from_mintegi_dot_com

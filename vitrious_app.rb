@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'mechanize'
 require 'bundler'
 Bundler.require
 
