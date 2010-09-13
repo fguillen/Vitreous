@@ -2,11 +2,11 @@ require 'mechanize'
 
 module Extra
   class Spider
-    def self.create_tree_from_mintegi_dot_com
+    def self.create_tree_from_XXX_dot_com
       structure = []
       
       agent = Mechanize.new
-      agent.get( 'http://mintegi.com')
+      agent.get( 'http://XXX.com')
       agent.page.search("div#menu div.container > ul").each do |ul|
         li_title = ul.search("li.section-title").first
         next  if li_title.nil?
@@ -41,12 +41,12 @@ module Extra
         structure << collection
       end
       
-      File.open( "#{File.dirname(__FILE__)}/mintegi_com.yml", 'w' ) { |f| f.write structure.to_yaml }
+      File.open( "#{File.dirname(__FILE__)}/XXX_com.yml", 'w' ) { |f| f.write structure.to_yaml }
       puts structure.to_yaml
     end
     
     def self.digest_structure
-      structure = YAML.load_file( "#{File.dirname(__FILE__)}/mintegi_com.yml" )
+      structure = YAML.load_file( "#{File.dirname(__FILE__)}/XXX_com.yml" )
       
       base_path = "#{File.dirname(__FILE__)}/Vitrious"
       FileUtils.rm_rf base_path
