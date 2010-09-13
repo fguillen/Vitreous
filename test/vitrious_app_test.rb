@@ -96,5 +96,10 @@ class VitriousAppTest < Test::Unit::TestCase
     
     assert_match( /collection ordered.*01-file-ordered.*02-another-file-ordered.*collection1.*file1.*file2.*collection2.*file3/m, last_response.body )
   end
+  
+  def test_bluecloth_on_item_description
+    get '/collection1/file1'
+    assert_match( "<p>file1 content<br/>\ntwo lines</p>", last_response.body )
+  end
     
 end
