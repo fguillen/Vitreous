@@ -53,7 +53,13 @@ module Extra
         puts "collection: #{collection[:title]}"
         FileUtils.mkdir_p( "#{base_path}/#{collection[:title]}" )
         collection[:items].each_with_index do |item, index|
-          File.open( "#{base_path}/#{collection[:title]}/#{"%03d" % (index*10)} #{item[:title]}.txt", 'w' ) { |f| f.write item[:description] }
+          File.open( "#{base_path}/#{collection[:title]}/#{"%03d" % (index*10)} #{item[:title]}.txt", 'w' ) do |f|
+            f.write item[:description]
+          end
+          
+          File.open( "#{base_path}/#{collection[:title]}/#{"%03d" % (index*10)} #{item[:title]}.jpg", 'w' ) do |f| 
+            f.write Net::HTTP.get( URI.parse( item[:img] ) )
+          end
         end
       end
     end

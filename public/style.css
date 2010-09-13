@@ -22,6 +22,7 @@ a img { border: none; }
   top: 10px;
   left: 50px;
   position: fixed;
+  height: 100%;
   background-color: #fff;
 }
 
